@@ -1,0 +1,861 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBM MAILON — Job Safety</title>
+
+<style>
+
+:root {
+  color-scheme: light;
+  --bg: #f4f5f0;
+  --panel: #ffffff;
+  --panel-2: #f7f8f5;
+  --line: #dfe4dc;
+  --text: #202a23;
+  --muted: #59675e;
+  --teal: #315c48;
+  --teal-dark: #eaf0e9;
+  --red: #a43d35;
+  --yellow: #805b13;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.7 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+main {
+  width: min(100% - 48px, 1240px);
+  margin: 0 auto;
+  padding: 30px 0 56px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 38px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand { display: flex; align-items: center; gap: 15px; }
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--teal);
+  color: white;
+  font-weight: 800;
+  font-size: 25px;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+
+h1 { font-size: 25px; line-height: 1.3; letter-spacing: -.5px; margin: 0; }
+h2 { font-size: 22px; line-height: 1.4; letter-spacing: -.3px; margin-bottom: 12px; }
+h3 { font-size: 18px; line-height: 1.45; margin-bottom: 9px; }
+
+.muted, .subtitle { color: var(--muted); }
+
+.subtitle { margin: 4px 0 0; font-size: 15px; }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #cbd9cd;
+  background: #edf3ec;
+  padding: 8px 13px;
+  border-radius: 8px;
+  color: var(--teal);
+  font-size: 14px;
+  font-weight: 650;
+  white-space: normal;
+}
+
+.intro { margin-bottom: 32px; max-width: 850px; }
+
+.intro::before {
+  content: "RECRUITMENT SAFETY";
+  display: block;
+  color: var(--teal);
+  font-size: 13px;
+  letter-spacing: 1.7px;
+  font-weight: 750;
+  margin-bottom: 12px;
+}
+
+.intro h2 {
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.16;
+  letter-spacing: -1.2px;
+  max-width: 780px;
+  margin-bottom: 16px;
+}
+
+.intro p { max-width: 720px; font-size: 18px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.panel {
+  min-width: 0;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: 0 4px 14px #202b2008;
+}
+
+.panel > p.muted { font-size: 16px; }
+
+.full { grid-column: 1 / -1; }
+
+label {
+  display: block;
+  font-weight: 700;
+  margin: 20px 0 9px;
+  font-size: 16px;
+}
+
+textarea, select, input {
+  max-width: 100%;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 16px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 230px;
+  resize: vertical;
+  background: #fdfdfa;
+  border: 1px solid #c6d0c5;
+  border-radius: 10px;
+  padding: 17px;
+  line-height: 1.7;
+  transition: border-color .15s;
+}
+
+textarea::placeholder { color: #6b766d; }
+
+textarea:focus, select:focus, input:focus {
+  outline: 3px solid #dce8dc;
+  border-color: var(--teal);
+}
+
+select {
+  width: 100%;
+  min-height: 50px;
+  padding: 10px 13px;
+  border: 1px solid #c6d0c5;
+  border-radius: 9px;
+  background: #fff;
+}
+
+button {
+  min-height: 48px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  padding: 12px 20px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+
+button:hover { filter: brightness(.97); }
+
+button:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+}
+
+.primary { background: var(--teal); color: white; }
+
+.secondary { background: white; color: var(--text); border-color: #c6d0c5; }
+
+button:disabled { opacity: .55; cursor: wait; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+
+.toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 450;
+  margin-top: 18px;
+}
+
+.toggle input {
+  width: 19px;
+  height: 19px;
+  margin-top: 4px;
+  flex-shrink: 0;
+  accent-color: var(--teal);
+}
+
+.status { margin: 14px 0 0; color: var(--muted); font-size: 15px; min-height: 24px; }
+
+.score-wrap { display: flex; align-items: center; gap: 22px; margin: 26px 0; }
+
+.score {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  border: 1px solid #d7dfd5;
+  background: #f0f4ed;
+  color: var(--teal);
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.level { font-size: 26px; font-weight: 800; letter-spacing: -.3px; }
+.low { color: var(--teal); }
+.medium { color: var(--yellow); }
+.high { color: var(--red); }
+
+.track { height: 9px; background: #e8e9e2; border-radius: 99px; overflow: hidden; }
+.bar { height: 100%; width: 0; background: var(--teal); transition: width .25s ease; }
+
+.disclaimer {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.stack, .list { display: grid; gap: 12px; }
+
+.item {
+  padding: 17px;
+  border-radius: 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+
+.item strong { display: block; font-size: 16px; margin-bottom: 6px; color: var(--text); }
+
+.item p { margin: 0; color: var(--muted); font-size: 15px; overflow-wrap: anywhere; }
+
+.item a { color: var(--teal); overflow-wrap: anywhere; }
+
+.tag {
+  display: inline-block;
+  border: 1px solid #d5ded3;
+  border-radius: 6px;
+  padding: 4px 9px;
+  font-size: 13px;
+  color: var(--teal);
+  margin: 6px 5px 0 0;
+}
+
+.hidden { display: none !important; }
+
+.empty { color: var(--muted); font-size: 15px; }
+
+footer {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 18px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 900px) {
+  main { width: min(100% - 32px, 760px); }
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .full { grid-column: auto; }
+}
+
+@media (max-width: 600px) {
+  main { width: calc(100% - 24px); padding: 18px 0 32px; }
+  header { margin-bottom: 28px; align-items: flex-start; }
+  .intro h2 { font-size: 34px; letter-spacing: -.8px; }
+  .intro p { font-size: 16px; }
+  .panel { padding: 19px; }
+  .score { width: 80px; height: 80px; font-size: 27px; }
+  .score-wrap { gap: 15px; }
+  .level { font-size: 22px; }
+  .actions button { flex: 1 1 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}
+
+
+/* Unified recruitment-safety input workspace */
+.unified-workspace { grid-column: 1 / -1; }
+.workspace-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; flex-wrap:wrap; }
+.workspace-heading h2 { margin-bottom:8px; }
+.eyebrow { margin:0 0 8px; color:var(--teal); font-size:12px; font-weight:800; letter-spacing:1.5px; }
+.mode-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:24px 0 22px; padding-bottom:14px; border-bottom:1px solid var(--line); }
+.mode-tab { min-height:42px; padding:9px 14px; background:var(--panel-2); border-color:var(--line); color:var(--text); font-size:14px; }
+.mode-tab.active { background:var(--teal); color:#fff; border-color:var(--teal); }
+.mode-tab.future-mode { color:var(--muted); background:#f4f5f0; font-weight:500; font-size:13px; }
+.mode-tab:disabled { cursor:not-allowed; opacity:.75; }
+.settings-row { display:grid; grid-template-columns:minmax(190px,.8fr) minmax(260px,1.2fr); gap:22px; align-items:end; margin-top:14px; }
+.settings-row label { margin-top:12px; }
+.verify-toggle { margin-bottom:8px; }
+#messageMode textarea { min-height:190px; }
+#pdfMode { min-height:260px; }
+#pdfMode[hidden], #messageMode[hidden] { display:none !important; }
+@media (max-width:700px) {
+  .settings-row { grid-template-columns:1fr; gap:8px; }
+  .workspace-heading .pill { width:fit-content; }
+  .mode-tabs { gap:6px; }
+  .mode-tab { flex:1 1 auto; }
+}
+
+</style>
+
+</head>
+<body>
+<main>
+<header>
+  <div class="brand"><div class="logo">M</div><div><h1>IBM MAILON</h1><p class="subtitle">AI-assisted job safety</p></div></div>
+  <span class="pill" id="apiStatus">Checking API…</span>
+</header>
+
+<section class="intro">
+  <h2>Check the job offer before you trust it.</h2>
+  <p class="muted">Analyze recruitment messages, inspect warning signs, and review extracted job details in one place.</p>
+</section>
+
+<div class="grid">
+<section class="panel full unified-workspace">
+  <div class="workspace-heading">
+    <div>
+      <p class="eyebrow">INPUT WORKSPACE</p>
+      <h2>Analyze a recruitment offer</h2>
+      <p class="muted">Choose an input type and inspect the offer before you trust it.</p>
+    </div>
+    <span class="pill">Rule-based screening</span>
+  </div>
+
+  <div class="mode-tabs" id="inputModeTabs" role="tablist" aria-label="Analysis input type">
+    <button type="button" class="mode-tab active" id="tabMessage" role="tab" aria-selected="true" aria-controls="messageMode">Message</button>
+    <button type="button" class="mode-tab" id="tabPdf" role="tab" aria-selected="false" aria-controls="pdfMode">PDF offer</button>
+    <button type="button" class="mode-tab" id="tabLink" role="tab" aria-selected="false" aria-controls="linkMode">🔗 Job link</button>
+    <button type="button" class="mode-tab" id="tabEmail" role="tab" aria-selected="false" aria-controls="emailMode">✉ Recruiter email</button>
+    <button type="button" class="mode-tab" id="tabImage" role="tab" aria-selected="false" aria-controls="imageMode">▧ Screenshot</button>
+  </div>
+
+  <div id="messageMode" role="tabpanel" aria-labelledby="tabMessage">
+    <label for="message">Recruitment message</label>
+    <textarea id="message" maxlength="10000" placeholder="Paste the complete job offer, recruiter email, or vacancy details here…"></textarea>
+    <div class="language-setting">
+      <label for="aiProvider">AI explanation provider</label>
+      <select id="aiProvider">
+        <option value="none">Rule-based only (no AI API call)</option>
+        <option value="grok">Groq — AI explanation</option>
+        <option value="sarvam">Sarvam — AI explanation and input translation</option>
+      </select>
+    </div>
+    <div class="settings-row">
+      <div class="language-setting">
+        <label for="language">Preferred report language</label>
+        <select id="language">
+          <option value="English">English</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Telugu">Telugu</option>
+          <option value="Kannada">Kannada</option>
+          <option value="Malayalam">Malayalam</option>
+        </select>
+      </div>
+      <label class="toggle verify-toggle"><input type="checkbox" id="verify"> <span>Search external sources using Tavily. This may consume API credits. Results are leads, not proof.</span></label>
+    </div>
+    <div class="actions">
+      <button class="primary" id="analyze" type="button">Analyze message</button>
+      <button class="secondary" id="clear" type="button">Clear</button>
+    </div>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </div>
+
+  <div id="pdfMode" role="tabpanel" aria-labelledby="tabPdf" hidden>
+    <label for="pdfFile">Offer letter PDF</label>
+    <p class="muted">Upload a text-based PDF, maximum 5 MB. Scanned PDFs requiring OCR are not supported yet.</p>
+    <input id="pdfFile" type="file" accept=".pdf,application/pdf">
+    <div class="actions">
+      <button class="primary" id="analyzePdf" type="button">Analyze PDF</button>
+    </div>
+    <p class="status" id="pdfStatus" role="status" aria-live="polite"></p>
+  </div>
+
+  <!-- MAILON_BATCH_UPGRADE_V1: dedicated input workflows -->
+  <div id="linkMode" role="tabpanel" aria-labelledby="tabLink" hidden>
+    <label for="jobUrl">Job vacancy URL</label>
+    <input id="jobUrl" type="url" maxlength="2048" placeholder="https://careers.example.com/jobs/123" autocomplete="url">
+    <p class="muted">URL and hostname are inspected as text; the submitted website is not fetched. External search is optional.</p>
+    <label class="toggle verify-toggle"><input type="checkbox" id="verifyLink"> <span>Search external sources using Tavily (optional).</span></label>
+    <div class="actions"><button class="primary" id="analyzeLink" type="button">Analyze job link</button></div>
+    <p class="status" id="linkStatus" role="status" aria-live="polite"></p>
+  </div>
+  <div id="emailMode" role="tabpanel" aria-labelledby="tabEmail" hidden>
+    <label for="senderEmail">Recruiter sender email (optional)</label>
+    <input id="senderEmail" type="email" maxlength="320" placeholder="recruiter@example.com" autocomplete="email">
+    <label for="claimedEmployer">Claimed employer (optional)</label>
+    <input id="claimedEmployer" type="text" maxlength="200" placeholder="Company name">
+    <label for="emailJobTitle">Job title (optional)</label>
+    <input id="emailJobTitle" type="text" maxlength="200" placeholder="Software Engineer">
+    <label for="emailSubject">Email subject (optional)</label>
+    <input id="emailSubject" type="text" maxlength="300" placeholder="Interview / job offer">
+    <label for="emailBody">Email body</label>
+    <textarea id="emailBody" maxlength="10000" placeholder="Paste the recruiter email body here…"></textarea>
+    <label class="toggle verify-toggle"><input type="checkbox" id="verifyEmail"> <span>Search external sources using Tavily (optional).</span></label>
+    <div class="actions"><button class="primary" id="analyzeEmail" type="button">Analyze recruiter email</button></div>
+    <p class="status" id="emailStatus" role="status" aria-live="polite"></p>
+  </div>
+  <div id="imageMode" role="tabpanel" aria-labelledby="tabImage" hidden>
+    <label for="imageFile">Recruitment screenshot</label>
+    <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/bmp,image/tiff">
+    <p class="muted">Maximum 5 MB. OCR requires Python pytesseract and the Tesseract OCR system package. No external API is used.</p>
+    <div class="actions"><button class="primary" id="analyzeImage" type="button">Analyze screenshot</button></div>
+    <p class="status" id="imageStatus" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Risk overview</h2>
+  <p class="muted">Preliminary rule-based assessment</p>
+  <div class="score-wrap"><div class="score" id="score">—</div><div><div class="level" id="level">Awaiting analysis</div><div class="muted" id="summary">Submit a message to see results.</div></div></div>
+  <div class="item"><strong>Risk summary</strong><p id="riskSummary">Your assessment summary will appear here.</p></div>
+  <div class="item" style="margin-top:12px"><strong>Why this result?</strong><div class="list" id="whyFindings"><p class="empty">Analysis findings will appear here.</p></div></div>
+  <div class="actions" aria-label="Report voice controls">
+    <button class="primary" id="voiceReport" type="button">Listen</button>
+    <button class="secondary" id="pauseVoice" type="button">Pause</button>
+    <button class="secondary" id="stopVoice" type="button">Stop</button>
+  </div>
+  <p class="status" id="voiceStatus" role="status" aria-live="polite">Voice playback uses available browser voices.</p>
+  <div class="track"><div class="bar" id="bar"></div></div>
+  <div class="disclaimer" id="disclaimer">A low score does not guarantee that a message is safe.</div>
+</section>
+
+<section class="panel">
+  <h2>Warning indicators</h2>
+  <div class="list" id="indicators"><p class="empty">No analysis performed yet.</p></div>
+</section>
+
+<section class="panel">
+  <h2>Recommended actions</h2>
+  <div class="list" id="recommendations"><p class="empty">Recommendations will appear here.</p></div>
+</section>
+
+<details class="panel full">
+  <summary>Evidence and reasons</summary>
+  <p class="muted">Findings detected in the submitted message or document.</p>
+  <div class="list" id="evidence"><p class="empty">No evidence available yet.</p></div>
+</details>
+
+<details class="panel full">
+  <summary>Extracted job details</summary>
+  <div id="details" class="list"><p class="empty">Employer, role, contact, and URL candidates will appear here.</p></div>
+</details>
+
+<details class="panel full" id="verificationPanel" open>
+  <summary>External verification results</summary>
+  <div id="verification"><p class="empty">External search has not been performed.</p></div>
+</details>
+
+<details class="panel full">
+  <summary>Additional explanation</summary>
+  <p class="status" id="aiStatus" role="status" aria-live="polite">Rule-based analysis</p>
+  <div id="explanation" class="item"><p class="empty">The explanation will appear here after analysis.</p></div>
+</details>
+<footer>IBM MAILON · Preliminary screening only · Always verify job offers through trusted official channels.</footer>
+</div>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const list = (id, values, emptyText) => {
+  const root = $(id);
+  if (!Array.isArray(values) || !values.length) {
+    root.innerHTML = `<p class="empty">${esc(emptyText)}</p>`;
+    return;
+  }
+  root.innerHTML = values.map(value => {
+    if (typeof value === "string") return `<div class="item">${esc(value)}</div>`;
+    const title = value.category || value.title || value.source_type || "Finding";
+    const body = value.reason || value.content_excerpt || value.message || value.matched_text || "";
+    const url = value.url;
+    return `<div class="item"><strong>${esc(title)}</strong><p>${esc(body)}</p>${url ? `<p><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(url)}</a></p>` : ""}${value.severity ? `<span class="tag">${esc(value.severity)}</span>` : ""}${value.status ? `<span class="tag">${esc(value.status)}</span>` : ""}</div>`;
+  }).join("");
+};
+async function checkHealth() {
+  try {
+    const response = await fetch("/health");
+    if (!response.ok) throw new Error("API unavailable");
+    const data = await response.json();
+    $("apiStatus").textContent = data.status === "healthy" ? "API healthy" : "API status unknown";
+    $("apiStatus").style.color = data.status === "healthy" ? "#55d6a0" : "#ffd477";
+  } catch {
+    $("apiStatus").textContent = "API unavailable";
+    $("apiStatus").style.color = "#ff7777";
+  }
+}
+function render(data) {
+  $("score").textContent = data.risk_score ?? "—";
+  $("level").textContent = data.risk_level ?? "Unknown";
+  $("level").className = "level " + String(data.risk_level || "").toLowerCase();
+  const findings = Array.isArray(data.indicators) ? data.indicators : [];
+  const riskLevel = String(data.risk_level || "UNKNOWN").toUpperCase();
+  const riskScore = Number(data.risk_score) || 0;
+  $("summary").textContent = `${findings.length} indicator(s) reported`;
+  $("riskSummary").textContent = riskLevel === "HIGH"
+    ? `High risk (${riskScore}/100). Multiple warning signs were detected. Pause before responding, paying money, or sharing personal information.`
+    : riskLevel === "MEDIUM"
+      ? `Medium risk (${riskScore}/100). Some warning signs were detected. Check the evidence and verify the vacancy through the employer's official channel.`
+      : `Low detected risk (${riskScore}/100). No or few configured warning signs were detected. This does not prove the offer is genuine; verify independently.`;
+  list("whyFindings", findings, "No configured warning patterns were detected.");
+  $("bar").style.width = `${Math.max(0,Math.min(100,riskScore))}%`;
+  $("disclaimer").textContent = data.disclaimer || "Preliminary assessment only.";
+  list("indicators", data.indicators, "No indicators reported.");
+  list("recommendations", data.recommended_actions, "No recommendations returned.");
+  list("evidence", data.evidence, "No evidence findings returned.");
+  const d = data.job_details || {};
+  const detailRows = [
+    ["Possible employers", d.employer_candidates],
+    ["Possible job titles", d.job_title_candidates],
+    ["Possible vacancy IDs", d.vacancy_id_candidates],
+    ["Recruiter emails", d.recruiter_emails],
+    ["Email domains", d.email_domains],
+    ["URL hosts", d.url_hosts],
+    ["Job URLs", d.job_urls]
+  ];
+  $("details").innerHTML = detailRows.map(([label,values]) => `<div class="item"><strong>${esc(label)}</strong><p>${esc((values || []).join(", ") || "None extracted")}</p></div>`).join("");
+  const v = data.verification || {};
+  const details = data.job_details || {};
+  const vacancyIds = details.vacancy_id_candidates || [];
+  const hasVacancyId = vacancyIds.length > 0;
+  const sources = Array.isArray(v.external_sources_checked) ? v.external_sources_checked : [];
+  const verificationStatus = v.status || "unknown";
+  const statusLabel = verificationStatus === "not_performed"
+    ? "External search not performed"
+    : verificationStatus === "confirmed"
+      ? "Vacancy confirmation reported"
+      : "Inconclusive — manual verification needed";
+  const vacancyLabel = hasVacancyId
+    ? "A possible vacancy reference was extracted, but its existence has not been confirmed."
+    : "No specific vacancy reference was extracted, so these results cannot confirm an exact job opening.";
+  $("verification").innerHTML =
+    `<div class="item"><strong>${esc(statusLabel)}</strong><p>${esc(v.message || "No verification details returned.")}</p></div>` +
+    `<div class="item"><strong>Specific vacancy check</strong><p>${esc(vacancyLabel)}</p>` +
+    (hasVacancyId ? `<p>Candidate reference(s): ${esc(vacancyIds.join(", "))}</p>` : "") +
+    `</div>` +
+    `<div class="item"><strong>How to interpret search results</strong><p>Search results are leads for manual review, not proof that a recruiter or vacancy is genuine. Open the employer's official careers site and look for the exact role or reference before proceeding.</p></div>`;
+  if (sources.length) {
+    const sourceLabels = {
+      likely_official_employer_domain: "Likely official employer domain — verify independently",
+      third_party_recruitment_platform: "Third-party recruitment platform",
+      informational_source: "Informational source — background only",
+      unclassified_public_source: "Unclassified public source",
+      tavily_search_result: "Public web search result"
+    };
+    const sourceCards = sources.map(source => {
+      const url = String(source.url || "");
+      const safeUrl = /^https?:\/\//i.test(url) ? url : "";
+      const label = sourceLabels[source.source_type] || "Unclassified public source";
+      const matches = [
+        source.employer_match ? "Employer name matched" : "Employer name not matched",
+        source.job_title_match ? "Job title matched" : "Job title not matched"
+      ].join(" · ");
+      return `<div class="item">
+        <strong>${esc(source.title || "Untitled search result")}</strong>
+        <p><strong>Source type:</strong> ${esc(label)}</p>
+        <p><strong>Text match:</strong> ${esc(matches)}</p>
+        <p>${esc(source.relevance_note || "Review this result manually; relevance has not been established.")}</p>
+        <p>${esc(source.content_excerpt || "No excerpt was provided by the search service.")}</p>
+        ${safeUrl ? `<p><a target="_blank" rel="noopener noreferrer" href="${esc(safeUrl)}">Open original source ↗</a></p><p class="muted">${esc(safeUrl)}</p>` : '<p class="muted">No valid HTTP or HTTPS source link was returned.</p>'}
+      </div>`;
+    }).join("");
+    $("verification").innerHTML += `<div class="list" style="margin-top:12px"><strong>Public search results — review each source independently</strong><p class="muted">These pages are leads for human verification, not proof that a recruiter or vacancy is genuine. A text match does not establish authenticity.</p>${sourceCards}</div>`;
+    const panel = $("verificationPanel");
+    if (panel) panel.open = true;
+  }
+  const explanation = $("explanation");
+  explanation.textContent = data.ai_explanation || "No explanation returned.";
+
+  const aiStatus = $("aiStatus");
+  const provider = data.ai_provider || "none";
+  const providerStatus = data.ai_provider_status || "unknown";
+
+  if (providerStatus === "completed" && provider !== "none") {
+    aiStatus.textContent = `AI explanation completed (${provider}).`;
+  } else if (providerStatus === "fallback") {
+    aiStatus.textContent = `AI unavailable (${provider}); fallback explanation shown.`;
+  } else if (provider === "none" || providerStatus === "not_requested") {
+    aiStatus.textContent = "Rule-based analysis only; no AI API call was requested.";
+  } else {
+    aiStatus.textContent = `Analysis status: ${providerStatus}.`;
+  }
+}
+$("analyze").addEventListener("click", async () => {
+  const message = $("message").value.trim();
+  if (!message) { $("status").textContent = "Enter a recruitment message first."; $("message").focus(); return; }
+  $("analyze").disabled = true;
+  $("status").textContent = "Analyzing message…";
+  try {
+    const response = await fetch("/analyze", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({message,verify:$("verify").checked,ai_provider:$("aiProvider").value,language:$("language").value})
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || `Request failed (${response.status})`);
+    render(data);
+    $("status").textContent = "Analysis completed. Review the evidence and verify independently.";
+  } catch (error) {
+    $("status").textContent = `Analysis failed: ${error.message}. Check that the API is running.`;
+  } finally {
+    $("analyze").disabled = false;
+  }
+});
+$("analyzePdf").addEventListener("click", async () => {
+  const file = $("pdfFile").files[0];
+  if (!file) {
+    $("pdfStatus").textContent = "Choose a PDF offer letter first.";
+    return;
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    $("pdfStatus").textContent = "PDF must be 5 MB or smaller.";
+    return;
+  }
+  $("analyzePdf").disabled = true;
+  $("pdfStatus").textContent = "Extracting and analyzing PDF text…";
+  try {
+    const form = new FormData();
+    form.append("file", file);
+    const response = await fetch("/analyze-pdf", {method: "POST", body: form});
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || `Request failed (${response.status})`);
+    render(data);
+    $("pdfStatus").textContent = data.document_analysis?.text_extracted
+      ? `PDF analyzed: ${data.document_analysis.pages} page(s). No external AI API was used.`
+      : "PDF analysis completed.";
+  } catch (error) {
+    $("pdfStatus").textContent = `PDF analysis failed: ${error.message}`;
+  } finally {
+    $("analyzePdf").disabled = false;
+  }
+});
+
+
+
+const inputTabs = [
+  {button: $("tabMessage"), panel: $("messageMode")},
+  {button: $("tabPdf"), panel: $("pdfMode")}
+];
+inputTabs.forEach(({button, panel}) => {
+  button.addEventListener("click", () => {
+    inputTabs.forEach(({button: otherButton, panel: otherPanel}) => {
+      const active = otherButton === button;
+      otherButton.classList.toggle("active", active);
+      otherButton.setAttribute("aria-selected", String(active));
+      otherPanel.hidden = !active;
+    });
+  });
+});
+
+function getVoiceReportText() {
+  const parts = [
+    "IBM Mailon recruitment safety report.",
+    "Risk score: " + ($("score").textContent || "not available") + " out of 100.",
+    "Risk level: " + ($("level").textContent || "not available") + ".",
+    "Summary: " + ($("riskSummary").textContent || ""),
+    "Warnings: " + ($("indicators").innerText || ""),
+    "Evidence: " + ($("evidence").innerText || ""),
+    "Recommended actions: " + ($("recommendations").innerText || ""),
+    "Important: " + ($("disclaimer").textContent || "")
+  ];
+  return parts.filter(Boolean).join(" ");
+}
+$("voiceReport").addEventListener("click", async () => {
+  if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+    $("voiceStatus").textContent = "Voice playback is not supported by this browser.";
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+  let reportText = getVoiceReportText();
+  const language = $("language").value;
+  const langMap = {
+    English: "en-IN", Tamil: "ta-IN", Hindi: "hi-IN",
+    Telugu: "te-IN", Kannada: "kn-IN", Malayalam: "ml-IN"
+  };
+
+  if (language !== "English") {
+    $("voiceReport").disabled = true;
+    $("voiceStatus").textContent = `Translating report into ${language}…`;
+    try {
+      const response = await fetch("/translate-report", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({text: reportText, language})
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || "Translation failed");
+      reportText = data.translated_text;
+      if (!reportText || !reportText.trim()) throw new Error("Empty translation");
+    } catch (error) {
+      $("voiceStatus").textContent =
+        `Translation unavailable: ${error.message}. No untranslated report was played.`;
+      $("voiceReport").disabled = false;
+      return;
+    }
+    $("voiceReport").disabled = false;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(reportText);
+  utterance.lang = langMap[language] || "en-IN";
+
+  const matchingVoice = window.speechSynthesis.getVoices().find(
+    voice => voice.lang.toLowerCase().startsWith(utterance.lang.toLowerCase())
+  );
+  if (matchingVoice) utterance.voice = matchingVoice;
+
+  utterance.onstart = () => {
+    $("voiceStatus").textContent = `Reading the ${language} report aloud…`;
+  };
+  utterance.onend = () => {
+    $("voiceStatus").textContent = "Finished reading the report.";
+  };
+  utterance.onerror = () => {
+    $("voiceStatus").textContent =
+      "Voice playback failed. Check browser speech and language support.";
+  };
+  window.speechSynthesis.speak(utterance);
+});
+$("pauseVoice").addEventListener("click", () => {
+  if ("speechSynthesis" in window && window.speechSynthesis.speaking) {
+    window.speechSynthesis.pause();
+    $("voiceStatus").textContent = "Voice playback paused.";
+  } else {
+    $("voiceStatus").textContent = "There is no report currently playing.";
+  }
+});
+$("stopVoice").addEventListener("click", () => {
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  $("voiceStatus").textContent = "Voice playback stopped.";
+});
+
+$("clear").addEventListener("click", () => {
+  $("message").value = "";
+  $("verify").checked = false;
+  $("aiProvider").value = "none";
+  $("language").value = "English";
+  $("status").textContent = "";
+  $("score").textContent = "—";
+  $("level").textContent = "Awaiting analysis";
+  $("level").className = "level";
+  $("summary").textContent = "Submit a message to see results.";
+  $("riskSummary").textContent = "Your assessment summary will appear here.";
+  list("whyFindings", [], "Analysis findings will appear here.");
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  $("voiceStatus").textContent = "Voice playback uses available browser voices.";
+  $("bar").style.width = "0";
+  $("disclaimer").textContent = "A low score does not guarantee that a message is safe.";
+  list("indicators", [], "No analysis performed yet.");
+  list("recommendations", [], "Recommendations will appear here.");
+  list("evidence", [], "No evidence available yet.");
+  $("details").innerHTML = '<p class="empty">Employer, role, contact, and URL candidates will appear here.</p>';
+  $("verification").innerHTML = '<p class="empty">External search has not been performed.</p>';
+  $("explanation").textContent = "The explanation will appear here after analysis.";
+  $("aiStatus").textContent = "Awaiting analysis";
+});
+checkHealth();
+</script>
+
+<script id="MAILON_BATCH_UPGRADE_V1">
+(() => {
+  "use strict";
+  const modes = [["tabMessage","messageMode"],["tabPdf","pdfMode"],["tabLink","linkMode"],["tabEmail","emailMode"],["tabImage","imageMode"]];
+  function activate(tabId, panelId) {
+    for (const [tid,pid] of modes) {
+      const t=document.getElementById(tid), p=document.getElementById(pid);
+      if(t){const on=tid===tabId;t.classList.toggle("active",on);t.setAttribute("aria-selected",String(on));}
+      if(p)p.hidden=pid!==panelId;
+    }
+  }
+  for(const [tid,pid] of modes) document.getElementById(tid)?.addEventListener("click",()=>activate(tid,pid));
+  const el=id=>document.getElementById(id);
+  async function sendJson(url,payload,statusId,buttonId){
+    const status=el(statusId),button=el(buttonId);
+    if(button)button.disabled=true;if(status)status.textContent="Analyzing…";
+    try{
+      const response=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok)throw new Error(data.detail||`Request failed (${response.status}).`);
+      if(typeof window.render==="function")window.render(data);else if(typeof render==="function")render(data);
+      if(status)status.textContent="Analysis complete. Review the risk overview and evidence below.";
+      document.querySelector(".score-wrap")?.scrollIntoView({behavior:"smooth",block:"nearest"});
+    }catch(e){if(status)status.textContent=e?.message||"Analysis failed. Check the server and try again.";}
+    finally{if(button)button.disabled=false;}
+  }
+  async function sendFile(url,file,statusId,buttonId){
+    const status=el(statusId),button=el(buttonId);
+    if(!file){if(status)status.textContent="Choose a file first.";return;}
+    if(button)button.disabled=true;if(status)status.textContent="Uploading and analyzing…";
+    try{
+      const body=new FormData();body.append("file",file);
+      const response=await fetch(url,{method:"POST",body});const data=await response.json().catch(()=>({}));
+      if(!response.ok)throw new Error(data.detail||`Request failed (${response.status}).`);
+      if(typeof window.render==="function")window.render(data);else if(typeof render==="function")render(data);
+      if(status)status.textContent="Analysis complete. Review the report below.";
+      document.querySelector(".score-wrap")?.scrollIntoView({behavior:"smooth",block:"nearest"});
+    }catch(e){if(status)status.textContent=e?.message||"Upload failed. Check the server and try again.";}
+    finally{if(button)button.disabled=false;}
+  }
+  el("analyzeLink")?.addEventListener("click",()=>{
+    const url=(el("jobUrl")?.value||"").trim();
+    if(!url){el("linkStatus").textContent="Paste a job URL first.";return;}
+    sendJson("/analyze-link",{url,verify:!!el("verifyLink")?.checked,language:el("language")?.value||"English",ai_provider:"none"},"linkStatus","analyzeLink");
+  });
+  el("analyzeEmail")?.addEventListener("click",()=>{
+    const message=(el("emailBody")?.value||"").trim();
+    if(!message){el("emailStatus").textContent="Paste the email body first.";return;}
+    sendJson("/analyze-recruiter-email",{
+      sender_email:(el("senderEmail")?.value||"").trim(),claimed_employer:(el("claimedEmployer")?.value||"").trim(),
+      job_title:(el("emailJobTitle")?.value||"").trim(),subject:(el("emailSubject")?.value||"").trim(),message,
+      verify:!!el("verifyEmail")?.checked,language:el("language")?.value||"English",ai_provider:"none"
+    },"emailStatus","analyzeEmail");
+  });
+  el("analyzeImage")?.addEventListener("click",()=>sendFile("/analyze-image",el("imageFile")?.files?.[0],"imageStatus","analyzeImage"));
+})();
+</script>
+
+</body>
+</html>
